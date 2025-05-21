@@ -253,26 +253,40 @@
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Image Understanding</h2>
     
-    <!-- Simplified Carousel -->
-    <div id="understanding-carousel" class="simple-carousel">
-      <div class="understanding-carousel-item active">
-        <img src="static/images/answer_evolution0.gif" alt="Animation 1"/>
+    <!-- Simplified Carousel with Navigation Arrows -->
+    <div class="understanding-carousel-container">
+      <button class="understanding-nav-arrow understanding-prev" onclick="moveUnderstandingCarousel(-1)">
+        <span class="icon">
+          <i class="fas fa-chevron-left"></i>
+        </span>
+      </button>
+      
+      <div id="understanding-carousel" class="simple-carousel">
+        <div class="understanding-carousel-item active">
+          <img src="static/images/answer_evolution0.gif" alt="Animation 1"/>
+        </div>
+        <div class="understanding-carousel-item">
+          <img src="static/images/answer_evolution3.gif" alt="Animation 2"/>
+        </div>
+        <div class="understanding-carousel-item">
+          <img src="static/images/answer_evolution6.gif" alt="Animation 3"/>
+        </div>
+        <div class="understanding-carousel-item">
+          <img src="static/images/answer_evolution7.gif" alt="Animation 4"/>
+        </div>
+        <div class="understanding-carousel-item">
+          <img src="static/images/answer_evolution9.gif" alt="Animation 5"/>
+        </div>
+        <div class="understanding-carousel-item">
+          <img src="static/images/answer_evolution10.gif" alt="Animation 6"/>
+        </div>
       </div>
-      <div class="understanding-carousel-item">
-        <img src="static/images/answer_evolution3.gif" alt="Animation 2"/>
-      </div>
-      <div class="understanding-carousel-item">
-        <img src="static/images/answer_evolution6.gif" alt="Animation 3"/>
-      </div>
-      <div class="understanding-carousel-item">
-        <img src="static/images/answer_evolution7.gif" alt="Animation 4"/>
-      </div>
-      <div class="understanding-carousel-item">
-        <img src="static/images/answer_evolution9.gif" alt="Animation 5"/>
-      </div>
-      <div class="understanding-carousel-item">
-        <img src="static/images/answer_evolution10.gif" alt="Animation 6"/>
-      </div>
+      
+      <button class="understanding-nav-arrow understanding-next" onclick="moveUnderstandingCarousel(1)">
+        <span class="icon">
+          <i class="fas fa-chevron-right"></i>
+        </span>
+      </button>
     </div>
     
     <!-- Dot Navigation -->
@@ -290,25 +304,38 @@
 </section>
 
 <style>
+  /* Container for carousel with arrows */
+  .understanding-carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
   /* Unique styling for understanding carousel */
   #understanding-carousel {
-    width: 100%;
+    width: 80%; /* Adjusted to 80% width */
     position: relative;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin: 0 auto;
   }
   
   .understanding-carousel-item {
     display: none;
     width: 100%;
     text-align: center;
+    transition: opacity 0.5s ease;
+    opacity: 0;
   }
   
   .understanding-carousel-item.active {
     display: block;
+    opacity: 1;
   }
   
-  /* Image styling - full width, no height restriction */
+  /* Image styling - adjusted width */
   .understanding-carousel-item img {
     width: 100%;
     height: auto;
@@ -316,6 +343,36 @@
     max-height: none; /* Remove height restriction */
     border-radius: 6px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  /* Navigation Arrows */
+  .understanding-nav-arrow {
+    background-color: rgba(0,0,0,0.2);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    position: absolute;
+    z-index: 10;
+  }
+  
+  .understanding-nav-arrow:hover {
+    background-color: rgba(0,0,0,0.5);
+    transform: scale(1.1);
+  }
+  
+  .understanding-prev {
+    left: 5%;
+  }
+  
+  .understanding-next {
+    right: 5%;
   }
   
   /* Dot Navigation */
@@ -351,6 +408,11 @@
   
   /* Responsive adjustments */
   @media (max-width: 768px) {
+    .understanding-nav-arrow {
+      width: 36px;
+      height: 36px;
+    }
+    
     .understanding-dot {
       width: 10px;
       height: 10px;
@@ -368,8 +430,9 @@
     let understandingCurrentSlide = 0;
     const understandingSlides = document.querySelectorAll('.understanding-carousel-item');
     const understandingDots = document.querySelectorAll('.understanding-dot');
+    let understandingAutoplayInterval = null;
     
-    // Show the current slide
+    // Show the current slide with animation
     function showUnderstandingSlide() {
       // Hide all slides
       understandingSlides.forEach(slide => {
@@ -388,18 +451,57 @@
     
     // Global function to jump to a specific slide
     window.jumpToUnderstandingSlide = function(index) {
-      understandingCurrentSlide = index;
-      showUnderstandingSlide();
+      if (index !== understandingCurrentSlide) {
+        understandingCurrentSlide = index;
+        showUnderstandingSlide();
+        resetAutoplay(); // Reset autoplay timer when manually changing slides
+      }
     }
     
     // Function to move carousel
     window.moveUnderstandingCarousel = function(direction) {
       understandingCurrentSlide = (understandingCurrentSlide + direction + understandingSlides.length) % understandingSlides.length;
       showUnderstandingSlide();
+      resetAutoplay(); // Reset autoplay timer when manually changing slides
+    }
+    
+    // Function to start autoplay
+    function startAutoplay() {
+      // Clear any existing interval first
+      if (understandingAutoplayInterval) {
+        clearInterval(understandingAutoplayInterval);
+      }
+      
+      // Set new interval
+      understandingAutoplayInterval = setInterval(function() {
+        moveUnderstandingCarousel(1); // Move to next slide
+      }, 5000); // Change slide every 5 seconds
+    }
+    
+    // Function to reset autoplay timer
+    function resetAutoplay() {
+      if (understandingAutoplayInterval) {
+        clearInterval(understandingAutoplayInterval);
+        startAutoplay();
+      }
     }
     
     // Initialize the carousel
     showUnderstandingSlide();
+    
+    // Start autoplay
+    startAutoplay();
+    
+    // Pause autoplay on hover
+    const carousel = document.getElementById('understanding-carousel');
+    carousel.addEventListener('mouseenter', function() {
+      clearInterval(understandingAutoplayInterval);
+      understandingAutoplayInterval = null;
+    });
+    
+    carousel.addEventListener('mouseleave', function() {
+      startAutoplay();
+    });
     
     // Add keyboard navigation
     document.addEventListener('keydown', function(e) {
