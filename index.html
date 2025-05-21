@@ -248,12 +248,12 @@
 </section>
 
 
-<!-- Simplified Animation Showcase -->
+<!-- Simplified Animation Showcase with Smooth Transitions -->
 <section class="section hero animation-showcase">
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Image Understanding</h2>
     
-    <!-- Simplified Carousel with Navigation Arrows -->
+    <!-- Carousel with Navigation Arrows -->
     <div class="understanding-carousel-container">
       <button class="understanding-nav-arrow understanding-prev" onclick="moveUnderstandingCarousel(-1)">
         <span class="icon">
@@ -262,23 +262,25 @@
       </button>
       
       <div id="understanding-carousel" class="simple-carousel">
-        <div class="understanding-carousel-item active">
-          <img src="static/images/answer_evolution0.gif" alt="Animation 1"/>
-        </div>
-        <div class="understanding-carousel-item">
-          <img src="static/images/answer_evolution3.gif" alt="Animation 2"/>
-        </div>
-        <div class="understanding-carousel-item">
-          <img src="static/images/answer_evolution6.gif" alt="Animation 3"/>
-        </div>
-        <div class="understanding-carousel-item">
-          <img src="static/images/answer_evolution7.gif" alt="Animation 4"/>
-        </div>
-        <div class="understanding-carousel-item">
-          <img src="static/images/answer_evolution9.gif" alt="Animation 5"/>
-        </div>
-        <div class="understanding-carousel-item">
-          <img src="static/images/answer_evolution10.gif" alt="Animation 6"/>
+        <div class="understanding-carousel-track">
+          <div class="understanding-carousel-item active">
+            <img src="static/images/answer_evolution0.gif" alt="Animation 1"/>
+          </div>
+          <div class="understanding-carousel-item">
+            <img src="static/images/answer_evolution3.gif" alt="Animation 2"/>
+          </div>
+          <div class="understanding-carousel-item">
+            <img src="static/images/answer_evolution6.gif" alt="Animation 3"/>
+          </div>
+          <div class="understanding-carousel-item">
+            <img src="static/images/answer_evolution7.gif" alt="Animation 4"/>
+          </div>
+          <div class="understanding-carousel-item">
+            <img src="static/images/answer_evolution9.gif" alt="Animation 5"/>
+          </div>
+          <div class="understanding-carousel-item">
+            <img src="static/images/answer_evolution10.gif" alt="Animation 6"/>
+          </div>
         </div>
       </div>
       
@@ -320,18 +322,25 @@
     position: relative;
     overflow: hidden;
     margin: 0 auto;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  .understanding-carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
   }
   
   .understanding-carousel-item {
-    display: none;
-    width: 100%;
+    min-width: 100%;
+    flex: 0 0 100%;
     text-align: center;
+    opacity: 0.5;
     transition: opacity 0.5s ease;
-    opacity: 0;
   }
   
   .understanding-carousel-item.active {
-    display: block;
     opacity: 1;
   }
   
@@ -341,8 +350,7 @@
     height: auto;
     object-fit: contain;
     max-height: none; /* Remove height restriction */
-    border-radius: 6px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: block;
   }
   
   /* Navigation Arrows */
@@ -425,33 +433,53 @@
 </style>
 
 <script>
-  // Specific carousel functionality for understanding section
+  // Smooth carousel functionality for understanding section
   document.addEventListener('DOMContentLoaded', function() {
     let understandingCurrentSlide = 0;
     const understandingSlides = document.querySelectorAll('.understanding-carousel-item');
     const understandingDots = document.querySelectorAll('.understanding-dot');
+    const understandingTrack = document.querySelector('.understanding-carousel-track');
     let understandingAutoplayInterval = null;
+    let isAnimating = false;
     
-    // Show the current slide with animation
+    // Initialize track with all items in a row
+    understandingTrack.style.width = `${understandingSlides.length * 100}%`;
+    
+    // Show the current slide with smooth transition
     function showUnderstandingSlide() {
-      // Hide all slides
-      understandingSlides.forEach(slide => {
-        slide.classList.remove('active');
+      if (isAnimating) return;
+      isAnimating = true;
+      
+      // Move track to position
+      understandingTrack.style.transform = `translateX(-${understandingCurrentSlide * 100}%)`;
+      
+      // Update active state for slides
+      understandingSlides.forEach((slide, index) => {
+        if (index === understandingCurrentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
       });
       
-      // Deactivate all dots
-      understandingDots.forEach(dot => {
-        dot.classList.remove('active');
+      // Update dots
+      understandingDots.forEach((dot, index) => {
+        if (index === understandingCurrentSlide) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
       });
       
-      // Show current slide and activate current dot
-      understandingSlides[understandingCurrentSlide].classList.add('active');
-      understandingDots[understandingCurrentSlide].classList.add('active');
+      // Allow next animation after transition completes
+      setTimeout(() => {
+        isAnimating = false;
+      }, 500); // Match this with CSS transition duration
     }
     
     // Global function to jump to a specific slide
     window.jumpToUnderstandingSlide = function(index) {
-      if (index !== understandingCurrentSlide) {
+      if (index !== understandingCurrentSlide && !isAnimating) {
         understandingCurrentSlide = index;
         showUnderstandingSlide();
         resetAutoplay(); // Reset autoplay timer when manually changing slides
@@ -460,6 +488,8 @@
     
     // Function to move carousel
     window.moveUnderstandingCarousel = function(direction) {
+      if (isAnimating) return;
+      
       understandingCurrentSlide = (understandingCurrentSlide + direction + understandingSlides.length) % understandingSlides.length;
       showUnderstandingSlide();
       resetAutoplay(); // Reset autoplay timer when manually changing slides
@@ -474,7 +504,9 @@
       
       // Set new interval
       understandingAutoplayInterval = setInterval(function() {
-        moveUnderstandingCarousel(1); // Move to next slide
+        if (!isAnimating) {
+          moveUnderstandingCarousel(1); // Move to next slide
+        }
       }, 5000); // Change slide every 5 seconds
     }
     
@@ -487,7 +519,8 @@
     }
     
     // Initialize the carousel
-    showUnderstandingSlide();
+    understandingSlides[0].classList.add('active');
+    understandingDots[0].classList.add('active');
     
     // Start autoplay
     startAutoplay();
@@ -511,6 +544,28 @@
         moveUnderstandingCarousel(1);
       }
     });
+    
+    // Handle touch events for mobile swipe
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    carousel.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    carousel.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+    
+    function handleSwipe() {
+      // Detect swipe direction with a threshold of 50px
+      if (touchEndX < touchStartX - 50) {
+        moveUnderstandingCarousel(1); // Swipe left, go to next
+      } else if (touchEndX > touchStartX + 50) {
+        moveUnderstandingCarousel(-1); // Swipe right, go to previous
+      }
+    }
   });
 </script>
 
