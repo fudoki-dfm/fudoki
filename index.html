@@ -248,289 +248,167 @@
 </section>
 
 
-<!-- Animation Showcase Carousel -->
-<section class="hero is-small animation-showcase">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title has-text-centered">Image Understanding</h2>
-      <div id="animation-carousel" class="carousel animation-carousel">
-        <div class="item">
-          <img src="static/images/answer_evolution0.gif" alt="Animation 1"/>
-        </div>
-        <div class="item">
-          <img src="static/images/answer_evolution3.gif" alt="Animation 2"/>
-        </div>
-        <div class="item">
-          <img src="static/images/answer_evolution6.gif" alt="Animation 3"/>
-        </div>
-        <div class="item">
-          <img src="static/images/answer_evolution7.gif" alt="Animation 4"/>
-        </div>
-        <div class="item">
-          <img src="static/images/answer_evolution9.gif" alt="Animation 5"/>
-        </div>
-        <div class="item">
-          <img src="static/images/answer_evolution10.gif" alt="Animation 6"/>
-        </div>
+<!-- Simplified Animation Showcase -->
+<section class="section hero animation-showcase">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Image Understanding</h2>
+    
+    <!-- Simplified Carousel -->
+    <div id="understanding-carousel" class="simple-carousel">
+      <div class="understanding-carousel-item active">
+        <img src="static/images/answer_evolution0.gif" alt="Animation 1"/>
       </div>
-      <!-- Navigation Controls -->
-      <div class="carousel-nav">
-        <button class="nav-prev" onclick="moveCarousel(-1)">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-        <div class="nav-dots">
-          <span class="dot active" onclick="jumpToSlide(0)"></span>
-          <span class="dot" onclick="jumpToSlide(1)"></span>
-          <span class="dot" onclick="jumpToSlide(2)"></span>
-          <span class="dot" onclick="jumpToSlide(3)"></span>
-          <span class="dot" onclick="jumpToSlide(4)"></span>
-          <span class="dot" onclick="jumpToSlide(5)"></span>
-        </div>
-        <button class="nav-next" onclick="moveCarousel(1)">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
+      <div class="understanding-carousel-item">
+        <img src="static/images/answer_evolution3.gif" alt="Animation 2"/>
       </div>
-      <div class="counter-display">
-        <span id="current-slide">1</span>/<span id="total-slides">6</span>
+      <div class="understanding-carousel-item">
+        <img src="static/images/answer_evolution6.gif" alt="Animation 3"/>
+      </div>
+      <div class="understanding-carousel-item">
+        <img src="static/images/answer_evolution7.gif" alt="Animation 4"/>
+      </div>
+      <div class="understanding-carousel-item">
+        <img src="static/images/answer_evolution9.gif" alt="Animation 5"/>
+      </div>
+      <div class="understanding-carousel-item">
+        <img src="static/images/answer_evolution10.gif" alt="Animation 6"/>
+      </div>
+    </div>
+    
+    <!-- Dot Navigation -->
+    <div class="understanding-carousel-navigation">
+      <div class="understanding-nav-dots">
+        <span class="understanding-dot active" onclick="jumpToUnderstandingSlide(0)"></span>
+        <span class="understanding-dot" onclick="jumpToUnderstandingSlide(1)"></span>
+        <span class="understanding-dot" onclick="jumpToUnderstandingSlide(2)"></span>
+        <span class="understanding-dot" onclick="jumpToUnderstandingSlide(3)"></span>
+        <span class="understanding-dot" onclick="jumpToUnderstandingSlide(4)"></span>
+        <span class="understanding-dot" onclick="jumpToUnderstandingSlide(5)"></span>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  /* Modern Carousel Styling */
-  .animation-showcase {
-    background-color: #f8f9fa;
-    padding: 30px 0;
-    border-radius: 8px;
-    margin: 30px 0;
-  }
-  
-  .animation-showcase .title {
-    font-weight: 600;
-    margin-bottom: 30px;
-    color: #333;
-    font-size: 2.2rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  
-  .animation-carousel {
-    position: relative;
+  /* Unique styling for understanding carousel */
+  #understanding-carousel {
     width: 100%;
+    position: relative;
     overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    background-color: #fff;
+    margin-bottom: 20px;
   }
   
-  .animation-carousel .item {
+  .understanding-carousel-item {
     display: none;
+    width: 100%;
     text-align: center;
-    padding: 20px;
-    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    opacity: 0;
-    transform: scale(0.95);
   }
   
-  .animation-carousel .item.active {
+  .understanding-carousel-item.active {
     display: block;
-    opacity: 1;
-    transform: scale(1);
   }
   
-  .animation-carousel img {
-    max-width: 100%;
-    max-height: 500px;
-    margin: 0 auto;
-    display: block;
+  /* Image styling - full width, no height restriction */
+  .understanding-carousel-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: none; /* Remove height restriction */
     border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   }
   
-  /* Stylish Navigation */
-  .carousel-nav {
+  /* Dot Navigation */
+  .understanding-carousel-navigation {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 25px;
+    margin: 20px 0;
   }
   
-  .nav-prev, .nav-next {
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    border: none;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    margin: 0 15px;
-    cursor: pointer;
+  .understanding-nav-dots {
     display: flex;
     justify-content: center;
-    align-items: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 12px;
   }
   
-  .nav-prev:hover, .nav-next:hover {
-    background-color: #000;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  .nav-dots {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .dot {
-    height: 12px;
+  .understanding-dot {
     width: 12px;
-    margin: 0 6px;
-    background-color: rgba(0, 0, 0, 0.2);
+    height: 12px;
     border-radius: 50%;
-    display: inline-block;
+    background-color: #dbdbdb;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
   }
   
-  .dot:hover {
-    background-color: rgba(0, 0, 0, 0.5);
+  .understanding-dot:hover {
+    background-color: #b5b5b5;
   }
   
-  .dot.active {
-    background-color: #000;
+  .understanding-dot.active {
+    background-color: #4a4a4a;
     transform: scale(1.2);
-  }
-  
-  .counter-display {
-    text-align: center;
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: 15px;
-    font-family: monospace;
-    letter-spacing: 1px;
   }
   
   /* Responsive adjustments */
   @media (max-width: 768px) {
-    .animation-carousel img {
-      max-height: 350px;
-    }
-    
-    .nav-prev, .nav-next {
-      width: 38px;
-      height: 38px;
-    }
-    
-    .dot {
-      height: 10px;
+    .understanding-dot {
       width: 10px;
-      margin: 0 4px;
+      height: 10px;
+    }
+    
+    .understanding-nav-dots {
+      gap: 10px;
     }
   }
 </style>
 
 <script>
-  // Enhanced carousel functionality
-  let currentSlide = 0;
-  const slides = document.querySelectorAll('.animation-carousel .item');
-  const dots = document.querySelectorAll('.dot');
-  const currentSlideDisplay = document.getElementById('current-slide');
-  const totalSlidesDisplay = document.getElementById('total-slides');
-  
-  // Initialize display
-  function showSlides() {
-    for (let i = 0; i < slides.length; i++) {
-      slides[i].classList.remove('active');
-      dots[i].classList.remove('active');
-    }
-    slides[currentSlide].classList.add('active');
-    dots[currentSlide].classList.add('active');
-    currentSlideDisplay.textContent = currentSlide + 1;
-    totalSlidesDisplay.textContent = slides.length;
-  }
-  
-  // Move carousel with transition effect
-  function moveCarousel(n) {
-    // Apply exit animation
-    slides[currentSlide].style.opacity = '0';
-    slides[currentSlide].style.transform = 'scale(0.95)';
-    
-    setTimeout(() => {
-      currentSlide = (currentSlide + n + slides.length) % slides.length;
-      showSlides();
-      
-      // Apply entrance animation
-      setTimeout(() => {
-        slides[currentSlide].style.opacity = '1';
-        slides[currentSlide].style.transform = 'scale(1)';
-      }, 50);
-    }, 300);
-  }
-  
-  // Jump to specific slide
-  function jumpToSlide(n) {
-    if (n !== currentSlide) {
-      slides[currentSlide].style.opacity = '0';
-      slides[currentSlide].style.transform = 'scale(0.95)';
-      
-      setTimeout(() => {
-        currentSlide = n;
-        showSlides();
-        
-        setTimeout(() => {
-          slides[currentSlide].style.opacity = '1';
-          slides[currentSlide].style.transform = 'scale(1)';
-        }, 50);
-      }, 300);
-    }
-  }
-  
-  // Keyboard navigation
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowLeft') {
-      moveCarousel(-1);
-    } else if (e.key === 'ArrowRight') {
-      moveCarousel(1);
-    }
-  });
-  
-  // Initialize carousel on page load
+  // Specific carousel functionality for understanding section
   document.addEventListener('DOMContentLoaded', function() {
-    showSlides();
+    let understandingCurrentSlide = 0;
+    const understandingSlides = document.querySelectorAll('.understanding-carousel-item');
+    const understandingDots = document.querySelectorAll('.understanding-dot');
     
-    // Add swipe functionality for mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
-    const carousel = document.getElementById('animation-carousel');
-    
-    carousel.addEventListener('touchstart', e => {
-      touchStartX = e.changedTouches[0].screenX;
-    });
-    
-    carousel.addEventListener('touchend', e => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    });
-    
-    function handleSwipe() {
-      if (touchEndX < touchStartX - 50) {
-        moveCarousel(1); // Swipe left, next slide
-      } else if (touchEndX > touchStartX + 50) {
-        moveCarousel(-1); // Swipe right, previous slide
-      }
+    // Show the current slide
+    function showUnderstandingSlide() {
+      // Hide all slides
+      understandingSlides.forEach(slide => {
+        slide.classList.remove('active');
+      });
+      
+      // Deactivate all dots
+      understandingDots.forEach(dot => {
+        dot.classList.remove('active');
+      });
+      
+      // Show current slide and activate current dot
+      understandingSlides[understandingCurrentSlide].classList.add('active');
+      understandingDots[understandingCurrentSlide].classList.add('active');
     }
     
-    // Optional: Auto-play functionality
-    // const autoPlayInterval = setInterval(() => moveCarousel(1), 5000);
+    // Global function to jump to a specific slide
+    window.jumpToUnderstandingSlide = function(index) {
+      understandingCurrentSlide = index;
+      showUnderstandingSlide();
+    }
     
-    // Pause auto-play on hover
-    // carousel.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
-    // carousel.addEventListener('mouseleave', () => autoPlayInterval = setInterval(() => moveCarousel(1), 5000));
+    // Function to move carousel
+    window.moveUnderstandingCarousel = function(direction) {
+      understandingCurrentSlide = (understandingCurrentSlide + direction + understandingSlides.length) % understandingSlides.length;
+      showUnderstandingSlide();
+    }
+    
+    // Initialize the carousel
+    showUnderstandingSlide();
+    
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') {
+        moveUnderstandingCarousel(-1);
+      } else if (e.key === 'ArrowRight') {
+        moveUnderstandingCarousel(1);
+      }
+    });
   });
 </script>
 
