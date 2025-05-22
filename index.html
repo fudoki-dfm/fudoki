@@ -629,6 +629,19 @@
         <span class="comparison-dot" onclick="jumpToComparisonSlide(1)"></span>
       </div>
     </div>
+    
+    <!-- Description paragraph at the bottom of the section -->
+    <div class="content model-description-container">
+      <p class="model-comparison-description">
+        <strong>Generation process of different methods:</strong>
+        <br><br>
+        <strong>(a) AR-based Janus:</strong> Can only generate tokens sequentially; if an error is made in the initial step, subsequent outputs will consistently propagate this mistake.
+        <br><br>
+        <strong>(b) D-DiT (mask-based discrete diffusion, MDD):</strong> Cannot revise tokens once unmasked, making errors irreversible and leading to poor generalization.
+        <br><br>
+        <strong>(c) FUDOKI (discrete flow matching, DFM):</strong> Allows generated tokens to be revised in subsequent steps, enabling step-by-step reasoning and error correction for more accurate answers.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -673,14 +686,6 @@
     opacity: 1;
   }
   
-  /* Caption styling */
-  .comparison-carousel-item .caption {
-    margin-top: 15px;
-    font-size: 0.95rem;
-    color: #555;
-    line-height: 1.4;
-  }
-  
   /* Image styling - control dimensions */
   .comparison-carousel-item img {
     width: 100%;
@@ -689,6 +694,21 @@
     max-height: 800px; /* Set a reasonable max height */
     display: block;
     margin: 0 auto;
+  }
+  
+  /* Description styling */
+  .model-description-container {
+    margin-top: 30px;
+    padding: 0 10px;
+  }
+  
+  .model-comparison-description {
+    text-align: left;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 90%;
+    font-size: 0.95rem;
+    color: #333;
   }
   
   /* Navigation Arrows */
@@ -772,7 +792,7 @@
       max-height: 400px; /* Smaller max height on mobile */
     }
     
-    .comparison-carousel-item .caption {
+    .model-comparison-description {
       font-size: 0.85rem;
     }
   }
