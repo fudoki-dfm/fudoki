@@ -572,8 +572,8 @@
         <figure class="image">
           <img src="static/images/teaser.png" alt="Learning from model weights" class="blend-img-background center-image teaser-image">
         </figure>
-        <p>
-          Qualitative Results of Visual Generation and Understanding Capabilities of FUDOKI. Fudoki is designed based on the framework of discrete flow matching for both visual and textual modalities, capable of performing understanding and generation simultaneously under one unified paradigm.
+        <p class="results-description">
+          <strong>Qualitative Results of Visual Generation and Understanding Capabilities of FUDOKI.</strong> Fudoki is designed based on the framework of discrete flow matching for both visual and textual modalities, capable of performing understanding and generation simultaneously under one unified paradigm.
         </p>
       </div>
     </div>
@@ -589,8 +589,23 @@
     margin-right: auto;
     margin-bottom: 20px;
   }
+  
+  .results-description {
+    text-align: left;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 90%;
+    color: #333;
+    font-size: 0.95rem;
+  }
+  
+  @media (max-width: 768px) {
+    .results-description {
+      font-size: 0.9rem;
+      text-align: center;
+    }
+  }
 </style>
-
 
 <section class="section hero is-light animation-showcase">
   <div class="container is-max-desktop">
